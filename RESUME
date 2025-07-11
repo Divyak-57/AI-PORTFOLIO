@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divya Kumari - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .animate-slideInUp {
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Chat toggle button */
+        .chat-toggle {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            background-color: #7d1374;
+        }
+
+        /* Chat overlay */
+        .chat-overlay {
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .chat-overlay.hidden {
+            transform: translateY(100%);
+        }
+
+        /* Project card hover */
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Profile image hover */
+        .profile-img-hero {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-img-hero:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Scrollbar for chat */
+        .chat-messages {
+            scrollbar-width: thin;
+            scrollbar-color: #3b82f6 #1f2937;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 4px;
+        }
+
+        /* Dark theme */
+        .dark {
+            background-color: #0c1e11;
+        }
+
+        .dark .bg-white {
+            background-color: #09120f;
+        }
+
+        .dark .bg-gray-100 {
+            background-color: #0a1615;
+        }
+
+        .dark .text-gray-800 {
+            color: #b6bdcb;
+        }
+
+        .dark .text-gray-600 {
+            color: #bac8db;
+        }
+
+        .dark .bg-blue-900 {
+            background-color: #1e40af;
+        }
+
+        .dark .text-blue-900 {
+            color: #ccd2e7;
+        }
+
+        .dark .bg-blue-100 {
+            background-color: #3b82f6;
+        }
+
+        .dark .text-blue-600 {
+            color: #2563eb;
+        }
+
+        .dark .bg-gray-50 {
+            background-color: #374151;
+        }
+
+        .dark .border-gray-200 {
+            border-color: #4b5563;
+        }
+
+        .dark .text-white {
+            color: #111827;
+        }
+
+        .dark .hover\:text-gray-200:hover {
+            color: #1f2937;
+        }
+
+        .dark .hover\:text-blue-600:hover {
+            color: #2563eb;
+        }
+
+        /* Circular profile image */
+        .profile-img {
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Typing animation */
+        .typing {
+            display: inline-block;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .typing::after {
+            content: '...';
+            animation: typing 1s infinite;
+        }
+
+        @keyframes typing {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 transition-colors duration-300">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg fixed w-full z-10">
+        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl sm:text-3xl font-extrabold text-blue-900 animate-slideInUp">Divya Kumari</div>
+            <div class="flex space-x-4 sm:space-x-6 items-center">
+                <a href="#home" class="text-base sm:text-lg hover:text-blue-600 animate-slideInUp" style="animation-delay: 0.2s;">Home</a>
+                <a href="#about" class="text-base sm:text-lg hover:text-blue-600 animate-slideInUp" style="animation-delay: 0.3s;">About</a>
+                <a href="#projects" class="text-base sm:text-lg hover:text-blue-600 animate-slideInUp" style="animation-delay: 0.4s;">Projects</a>
+                <a href="#contact" class="text-base sm:text-lg hover:text-blue-600 animate-slideInUp" style="animation-delay: 0.5s;">Contact</a>
+                <button id="themeToggle" class="bg-blue-900 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full hover:bg-blue-800 animate-slideInUp" style="animation-delay: 0.6s;">Dark Mode</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-pink-700 text-white">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <img src="https://i.ibb.co/Vcj3QQQT/Whats-App-Image-2025-06-19-at-22-57-44-3acb6c2e.jpg" alt="Profile" class="profile-img profile-img-hero w-40 h-40 sm:w-48 h-48 mx-auto mb-8 animate-slideInUp">
+            <h1 class="text-4xl sm:text-6xl font-extrabold mb-4 animate-slideInUp" style="animation-delay: 0.2s;">Hi, I'm Divya Kumari</h1>
+            <p class="text-lg sm:text-2xl mb-8 animate-slideInUp" style="animation-delay: 0.4s;">Building Intuitive Experiences....</p>
+            <a href="#projects" class="bg-white text-blue-900 px-6 py-3 rounded-full font-semibold hover:bg-gray-200 animate-slideInUp" style="animation-delay: 0.6s;">Explore My Work</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-blue-900 animate-slideInUp">About Me</h2>
+            <div class="flex flex-col items-center">
+                <div class="w-full max-w-3xl text-center animate-slideInUp" style="animation-delay: 0.2s;">
+                    <p class="text-base sm:text-lg text-gray-600 mb-4">I'm a 3rd-year B.Tech student in Computer Science with a specialization in IoT at the Institute of Engineering and Management, Kolkata. I have a solid grasp of Data Structures and Algorithms, mainly using Java, along with basic knowledge of Python and C++. I'm interested in competitive programming, open-source contributions, and staying updated with tech trends. I enjoy applying my skills to real-world problems and engaging with the tech community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-blue-900 animate-slideInUp">My Projects</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden animate-slideInUp" style="animation-delay: 0.2s;">
+                    <img src="https://jpinfotech.org/wp-content/uploads/2023/01/JPPY2229-Heart-Disease-Prediction-using-Machine-Learning.jpg" alt="Heart Disease Prediction" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2 text-gray-800">Heart Disease Prediction</h3>
+                        <p class="text-gray-600 text-sm sm:text-base">It takes real-time data such as chest pain types, thal type, etc., and predicts whether the person has heart disease or not.</p>
+                        <p class="mt-2"><a href="https://github.com/Divyak-57/heart-disease-prediction" target="_blank" class="text-blue-600 hover:text-blue-800">View on GitHub</a></p>
+                    </div>
+                </div>
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden animate-slideInUp" style="animation-delay: 0.4s;">
+                    <img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/002/549/542/datas/original.png" alt="Iris Flower Classification" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2 text-gray-800">Iris Flower Classification</h3>
+                        <p class="text-gray-600 text-sm sm:text-base">A machine learning project to classify iris flowers based on their features.</p>
+                        <p class="mt-2"><a href="https://github.com/Divyak-57/OIBSIP" target="_blank" class="text-blue-600 hover:text-blue-800">View on GitHub</a></p>
+                    </div>
+                </div>
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden animate-slideInUp" style="animation-delay: 0.6s;">
+                    <img src="https://i.ibb.co/zHhLZPsm/Screenshot-2025-07-12-021646.png" alt="Weather Dashboard" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2 text-gray-800">AI Portfolio</h3>
+                        <p class="text-gray-600 text-sm sm:text-base">A resume with an integrated chatbot powered by AI.</p>
+                        <p class="mt-2"><a href="https://github.com/Divyak-57/ai-portfolio" target="_blank" class="text-blue-600 hover:text-blue-800">View on GitHub</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-blue-900 animate-slideInUp">Get in Touch</h2>
+            <p class="text-base sm:text-lg text-gray-600 mb-6 animate-slideInUp" style="animation-delay: 0.2s;">Interested in working together? Let's connect!</p>
+            <div class="flex justify-center space-x-4 sm:space-x-6 animate-slideInUp" style="animation-delay: 0.4s;">
+                <a href="mailto:divyaakumari2025@gmail.com" class="text-blue-600 hover:text-blue-800 text-base sm:text-lg">divyaakumari2025@gmail.com</a>
+                <a href="https://www.linkedin.com/in/divya-kumari-492a2028a" class="text-blue-600 hover:text-blue-800 text-base sm:text-lg">https://www.linkedin.com/in/divya-kumari-492a2028a</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Toggle Button -->
+    <div class="chat-toggle fixed bottom-6 right-6 bg-blue-900 text-white rounded-full p-4 shadow-lg cursor-pointer z-20 animate-fadeIn">
+        <span class="text-sm font-semibold">Ask about me</span>
+    </div>
+
+    <!-- Chat Overlay -->
+    <div id="chatOverlay" class="chat-overlay fixed bottom-0 right-0 w-full sm:w-96 h-[32rem] bg-white rounded-t-xl shadow-2xl z-30 hidden">
+        <div class="flex flex-col h-full">
+            <!-- Chat Header -->
+            <div class="bg-blue-900 text-white p-4 rounded-t-xl flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="https://i.ibb.co/Vcj3QQQT/Whats-App-Image-2025-06-19-at-22-57-44-3acb6c2e.jpg" alt="Profile" class="profile-img w-10 h-10 mr-2">
+                    <h3 class="text-lg font-semibold">Chat with Divya</h3>
+                </div>
+                <button id="closeChat" class="text-white hover:text-gray-200">✕</button>
+            </div>
+            <!-- Chat Messages -->
+            <div id="chatMessages" class="chat-messages flex-1 p-4 overflow-y-auto bg-gray-50">
+                <div class="mb-4 flex items-start">
+                    <img src="https://i.ibb.co/Vcj3QQQT/Whats-App-Image-2025-06-19-at-22-57-44-3acb6c2e.jpg" alt="Profile" class="profile-img w-8 h-8 mr-2 mt-1">
+                    <div class="bg-blue-100 text-blue-900 p-3 rounded-lg max-w-[80%]">
+                        Hi, I'm Divya Kumari, a 3rd-year CSE student. Ask me about my skills, projects, or interests!
+                    </div>
+                </div>
+            </div>
+            <!-- Chat Input -->
+            <div class="p-4 bg-white border-t border-gray-200">
+                <div class="flex">
+                    <input id="chatInput" type="text" placeholder="Type your message..." class="flex-1 p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button id="sendMessageBtn" class="bg-blue-900 text-white p-2 rounded-r-lg hover:bg-blue-800">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Toggle chat overlay
+        function toggleChat() {
+            const chatOverlay = document.getElementById('chatOverlay');
+            const chatMessages = document.getElementById('chatMessages');
+            chatOverlay.classList.toggle('hidden');
+            if (!chatOverlay.classList.contains('hidden')) {
+                chatMessages.innerHTML = `
+                    <div class="mb-4 flex items-start">
+                        <img src="https://i.ibb.co/Vcj3QQQT/Whats-App-Image-2025-06-19-at-22-57-44-3acb6c2e.jpg" alt="Profile" class="profile-img w-8 h-8 mr-2 mt-1">
+                        <div class="bg-blue-100 text-blue-900 p-3 rounded-lg max-w-[80%]">
+                            Hi, I'm Divya Kumari, a 3rd-year CSE student. Ask me about my skills, projects, or interests!
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Send message and simulate response
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            const messageText = input.value.trim();
+
+            if (!messageText) return; // Prevent empty messages
+
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'mb-4 flex justify-end';
+            userMessage.innerHTML = `<div class="bg-blue-900 text-white p-3 rounded-lg max-w-[80%]">${messageText}</div>`;
+            messages.appendChild(userMessage);
+
+            // Add typing animation
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'mb-4 flex items-start';
+            typingIndicator.innerHTML = `
+                <img src="https://i.ibb.co/Vcj3QQQT/Whats-App-Image-2025-06-19-at-22-57-44-3acb6c2e.jpg" alt="Profile" class="profile-img w-8 h-8 mr-2 mt-1">
+                <div class="bg-blue-100 text-blue-900 p-3 rounded-lg max-w-[80%]">
+                    <span class="typing"></span>
+                </div>
+            `;
+            messages.appendChild(typingIndicator);
+            messages.scrollTop = messages.scrollHeight;
+
+            // Simulate response based on 3rd-year CSE student description
+            setTimeout(() => {
+                typingIndicator.remove();
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'mb-4 flex items-start';
+                let responseText = "I'm a 3rd-year CSE student. Feel free to ask about my skills, projects, or career goals!";
+                if (messageText.toLowerCase().includes('skill') || messageText.toLowerCase().includes('technology')) {
+                    responseText = "I'm proficient in Python, Java, C++, and JavaScript, with experience in frameworks like React and Node.js. I'm also exploring AI and machine learning tools like TensorFlow.";
+                } else if (messageText.toLowerCase().includes('project')) {
+                    responseText = "I've worked on projects like an e-commerce platform with secure payments, a task manager app with drag-and-drop functionality, and a weather dashboard using real-time APIs.";
+                } else if (messageText.toLowerCase().includes('hobb') || messageText.toLowerCase().includes('interest')) {
+                    responseText = "I enjoy hiking, learning about AI trends, and participating in hackathons. I also love solving problems on platforms like LeetCode and Codeforces.";
+                } else if (messageText.toLowerCase().includes('cgpa') || messageText.toLowerCase().includes('rank')) {
+                    responseText = "My current CGPA is 9.32, and I'm focused on maintaining a strong academic record while preparing for internships.";
+                } else if (messageText.toLowerCase().includes('career') || messageText.toLowerCase().includes('goal')) {
+                    responseText = "I'm preparing for internships and aiming to work in web development or AI. I'm also considering higher studies to specialize in machine learning or data science.";
+                }
+                aiMessage.innerHTML = `
+                    <img src="https://i.ibb.co/Vcj3QQQT/Whats-App-Image-2025-06-19-at-22-57-44-3acb6c2e.jpg" alt="Profile" class="profile-img w-8 h-8 mr-2 mt-1">
+                    <div class="bg-blue-100 text-blue-900 p-3 rounded-lg max-w-[80%]">${responseText}</div>
+                `;
+                messages.appendChild(aiMessage);
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // Event listeners
+        document.querySelector('.chat-toggle').addEventListener('click', toggleChat);
+        document.getElementById('closeChat').addEventListener('click', toggleChat);
+        document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            themeToggle.textContent = document.body.classList.contains('dark') ? 'Light Mode' : 'Dark Mode';
+        });
+    </script>
+</body>
+</html>
